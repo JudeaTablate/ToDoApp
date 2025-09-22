@@ -1,80 +1,53 @@
-tasks = []
+# toDoApp.py
 
+tasks=[]
 
-def show_tasks():
-    if not tasks:
-        print("\nNo tasks yet.")
+def add_task(task):
+    """_summary_
+
+    Args:
+        task (_type_): _description_
+    """
+    tasks.append(task)
+    print("task added!")
+
+def show_tasks( ):
+    """_summary_
+    """
+    if len(tasks)==0 :
+        print("no tasks yet")
     else:
-        print("\n=== To-Do List ===")
-        for i, task in enumerate(tasks, start=1):
-            status = "✓" if task["done"] else " "
-            print(f"{i}. [{status}] {task['title']}")
+        for i in enumerate(tasks):
+            print(i+1,".",tasks[i])
 
+def remove_task(tasknumber):
+    """_summary_
 
-def add_task():
-    title = input("Enter task title: ").strip()
-    if not title:
-        print("Title cannot be empty.")
-        return
-    tasks.append({"title": title, "done": False})
-    print("Task added.")
-
-
-def mark_done():
-    show_tasks()
-    if not tasks:
-        return
-    try:
-        num = int(input("Task number to mark done: "))
-        if 1 <= num <= len(tasks):
-            tasks[num - 1]["done"] = True
-            print("Task marked done.")
-        else:
-            print("Invalid task number.")
-    except ValueError:
-        print("Please enter a valid number.")
-
-
-def delete_task():
-    show_tasks()
-    if not tasks:
-        return
-    try:
-        num = int(input("Task number to delete: "))
-        if 1 <= num <= len(tasks):
-            removed = tasks.pop(num - 1)
-            print(f"Removed: {removed['title']}")
-        else:
-            print("Invalid task number.")
-    except ValueError:
-        print("Please enter a valid number.")
-
+    Args:
+        tasknumber (_type_): _description_
+    """
+    tasks.pop(tasknumber) 
+    print("task removed!!")
 
 def main():
+    """_summary_
+    """
     while True:
-        print("\nOptions:")
-        print("1) Show tasks")
-        print("2) Add task")
-        print("3) Mark task done")
-        print("4) Delete task")
-        print("5) Quit")
-
-        choice = input("Choose (1-5): ")
-
-        if choice == "1":
+        print("1 Add Task")
+        print("2.Show Tasks")
+        print("3.Remove Task")
+        print("4- Exit")
+        ch = input("enter choice : ")
+        if ch=="1":
+            t = input("enter task : ")
+            add_task(t)
+        elif ch=="2":
             show_tasks()
-        elif choice == "2":
-            add_task()
-        elif choice == "3":
-            mark_done()
-        elif choice == "4":
-            delete_task()
-        elif choice == "5":
-            print("Goodbye!")
+        elif ch=="3":
+            n=int(input("enter task no to remove: "))
+            remove_task(n)
+        elif ch=="4":
             break
         else:
-            print("Invalid choice, try again.")
-
-
-if __name__ == "__main__":
-    main()
+            print("wrong choice!!")
+main()
