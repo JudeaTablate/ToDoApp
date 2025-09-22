@@ -83,3 +83,17 @@ def main():
 
         if ch == "1":
             t = input("Enter task: ").strip()
+            add_task(t)
+        elif ch == "2":
+            show_tasks()
+        elif ch == "3":
+            remove_task()
+        elif ch == "4":
+            print("Exiting program...")
+            break
+        else:
+            print("Invalid choice.")
+
+
+if __name__ == "__main__":
+    main()
