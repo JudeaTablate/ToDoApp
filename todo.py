@@ -1,72 +1,85 @@
 # toDoApp.py
+# A simple to-do list application
 
-tasks=[]
+tasks = []
 
-def add_task():
-    """_summary_
-
-    Args:
-        task (_type_): _description_
+def add_task(task=None):
+    """Add a task to the global tasks list.
+    If `task` is None, prompt the user for input.
     """
-    task = input("Enter task: ").strip()
+    if task is None:
+        task = input("Enter task: ").strip()
+    else:
+        task = str(task).strip()
+
     if not task:
         print("Task cannot be blank.")
-    else:
-        tasks.append(task)
-        print("Task has been added.")
+        return
 
-def show_tasks( ):
-    """_summary_
-    """
+    tasks.append(task)
+    print(f"Task added: '{task}'")
+
+
+def show_tasks():
+    """Display all tasks with numbering."""
     if not tasks:
         print("There are no existing tasks.")
-    else:
-        for i, task in enumerate(tasks, start = 1):
-            print(f"{i}. {task}")
+        return
 
-def remove_task():
-    """_summary_
+    for i, task in enumerate(tasks, start=1):
+        print(f"{i}. {task}")
 
-    Args:
-        tasknumber (_type_): _description_
+
+def remove_task(tasknumber=None):
+    """Remove a task by number.
+    If `tasknumber` is None, prompt the user for which task to remove.
+    `tasknumber` is treated as 1-based.
     """
     if not tasks:
         print("No existing tasks.")
         return
-    
-    show_tasks()
-    try:
-        num = int(input("Enter task number to remove: "))
+
+    if tasknumber is None:
+        show_tasks()
+        try:
+            num = int(input("Enter task number to remove: ").strip())
+        except ValueError:
+            print("Please enter a valid number.")
+            return
+
         if 1 <= num <= len(tasks):
-            confirm = input(f"Delete '{tasks[num-1]}'? (y/n): ")
-            if confirm == "y" or confirm == "Y":
-                remove = tasks.pop(num-1)
-                print(f"Removed: {remove}")
+            confirm = input(f"Delete '{tasks[num-1]}'? (y/n): ").strip().lower()
+            if confirm == "y":
+                removed = tasks.pop(num-1)
+                print(f"Removed: {removed}")
             else:
                 print("Cancelled.")
         else:
             print("Task number is invalid.")
-    except ValueError:
-        print("Please enter a valid number.")
+    else:
+        try:
+            num = int(tasknumber)
+        except Exception:
+            print("Invalid task number argument.")
+            return
+
+        if 1 <= num <= len(tasks):
+            removed = tasks.pop(num-1)
+            print(f"Removed: {removed}")
+        else:
+            print("Task number is invalid.")
+
 
 def main():
-    """_summary_
-    """
+    """Main menu loop."""
     while True:
-        print("1 Add Task")
-        print("2.Show Tasks")
-        print("3.Remove Task")
-        print("4- Exit")
-        ch = input("Enter choice : ")
-        if ch == "1": 
-            add_task()
-        elif ch=="2": 
-            show_tasks()
-        elif ch=="3": 
-            remove_task()
-        elif ch=="4":
-            print("Exiting program...")
-            break
-        else:
-            print("Invalid choice.")
-main()
+        print("\n+------------------+")
+        print("1. Add Task")
+        print("2. Show Tasks")
+        print("3. Remove Task")
+        print("4. Exit")
+        print("+------------------+")
+        ch = input("Enter choice: ").strip()
+
+        if ch == "1":
+            t = input("Enter task: ").strip()
