@@ -1,5 +1,5 @@
 # toDoApp.py
-
+# A simple to-do list application
 tasks=[]
 
 def add_task(task):
